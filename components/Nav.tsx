@@ -1,8 +1,20 @@
 import Link from "next/link";
+import { createClient } from "@/lib/supabase/server";
+import LogoutButton from "./LogoutButton";
 
 const LOGO = "https://assets.cdn.filesafe.space/Ne8Gd3eTKEAUShnTXouw/media/69753298c1fa0c111e610e4b.png";
 
-export default function Nav() {
+export default async function Nav() {
+  const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  let panelHref: string | null = null;
+  if (user) {
+    const { data: prof } = await supabase.from("profiles").select("role").eq("id", user.id).single();
+    if (prof?.role === "admin") panelHref = "/admin";
+    else if (prof?.role === "builder") panelHref = "/panel";
+  }
+
   return (
     <header style={{ position: "sticky", top: 0, zIndex: 50, padding: "14px 0", background: "rgba(7,10,23,0.55)", backdropFilter: "blur(18px)", borderBottom: "1px solid var(--stroke-soft)" }}>
       <div className="wrap" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 18 }}>
@@ -12,8 +24,17 @@ export default function Nav() {
         </Link>
         <nav style={{ display: "flex", gap: 6, alignItems: "center" }}>
           <Link className="chip" href="/">Explorar</Link>
-          <Link className="btn btn-ghost" href="/login" style={{ padding: "10px 16px" }}>Iniciar sesión</Link>
-          <Link className="btn btn-primary" href="/login" style={{ padding: "10px 16px" }}>Publicar proyecto</Link>
+          {user ? (
+            <>
+              {panelHref && <Link className="btn btn-ghost" href={panelHref} style={{ padding: "10px 16px" }}>Mi panel</Link>}
+              <LogoutButton />
+            </>
+          ) : (
+            <>
+              <Link className="btn btn-ghost" href="/login" style={{ padding: "10px 16px" }}>Iniciar sesión</Link>
+              <Link className="btn btn-primary" href="/login" style={{ padding: "10px 16px" }}>Publicar proyecto</Link>
+            </>
+          )}
         </nav>
       </div>
     </header>
