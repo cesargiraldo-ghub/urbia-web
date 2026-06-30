@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
 import ProjectCard from "@/components/ProjectCard";
 import ScrapeForm from "@/components/ScrapeForm";
 import { Project, Lead } from "@/lib/types";
@@ -11,19 +12,19 @@ const tempBadge = (t: string | null) =>
 export default async function Panel() {
   const supabase = createClient();
 
-  // Org del usuario logueado; si no hay sesión, demo con la primera constructora.
+  // Acceso restringido: solo constructoras (builder) o admin.
   const { data: auth } = await supabase.auth.getUser();
-  let orgId: string | null = null;
+  if (!auth?.user) redirect("/login");
+  const { data: prof } = await supabase
+    .from("profiles")
+    .select("org_id, role")
+    .eq("id", auth.user.id)
+    .single();
+  if (prof?.role !== "builder" && prof?.role !== "admin") redirect("/");
+
+  const orgId: string | null = prof?.org_id ?? null;
   let orgName = "Tu constructora";
-  if (auth?.user) {
-    const { data: prof } = await supabase.from("profiles").select("org_id").eq("id", auth.user.id).single();
-    orgId = prof?.org_id ?? null;
-  }
-  if (!orgId) {
-    const { data: org } = await supabase.from("organizations").select("id, name").limit(1).single();
-    orgId = org?.id ?? null;
-    orgName = org?.name ?? orgName;
-  } else {
+  if (orgId) {
     const { data: org } = await supabase.from("organizations").select("name").eq("id", orgId).single();
     orgName = org?.name ?? orgName;
   }

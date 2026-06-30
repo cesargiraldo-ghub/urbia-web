@@ -1,9 +1,17 @@
 import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
 export default async function Admin() {
   const supabase = createClient();
+
+  // Acceso restringido: solo URBIA admin.
+  const { data: auth } = await supabase.auth.getUser();
+  if (!auth?.user) redirect("/login");
+  const { data: me } = await supabase.from("profiles").select("role").eq("id", auth.user.id).single();
+  if (me?.role !== "admin") redirect("/");
+
   const [{ data: orgs }, { count: projCount }, { count: leadCount }, { data: subs }] = await Promise.all([
     supabase.from("organizations").select("*"),
     supabase.from("projects").select("*", { count: "exact", head: true }),

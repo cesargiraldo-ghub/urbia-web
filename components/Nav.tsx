@@ -12,10 +12,8 @@ export default function Nav() {
         </Link>
         <nav style={{ display: "flex", gap: 6, alignItems: "center" }}>
           <Link className="chip" href="/">Explorar</Link>
-          <Link className="chip" href="/panel">Constructora</Link>
-          <Link className="chip" href="/admin">Admin</Link>
           <Link className="btn btn-ghost" href="/login" style={{ padding: "10px 16px" }}>Iniciar sesión</Link>
-          <Link className="btn btn-primary" href="/panel" style={{ padding: "10px 16px" }}>Publicar proyecto</Link>
+          <Link className="btn btn-primary" href="/login" style={{ padding: "10px 16px" }}>Publicar proyecto</Link>
         </nav>
       </div>
     </header>

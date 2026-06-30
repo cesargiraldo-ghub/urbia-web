@@ -78,8 +78,8 @@ export default async function Home() {
             Publica tu proyecto pegando solo el link de tu web. En el plan Premium, URBIA llena tu calendario de citas con clientes listos para comprar.
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link className="btn btn-primary" href="/panel">Empezar como constructora</Link>
-            <Link className="btn btn-ghost" href="/panel">Ver planes</Link>
+            <Link className="btn btn-primary" href="/login">Empezar como constructora</Link>
+            <Link className="btn btn-ghost" href="/login">Ver planes</Link>
           </div>
         </div>
       </section>

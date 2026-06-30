@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 
 export default function Login() {
   const router = useRouter();
-  const supabase = createClient();
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
@@ -15,6 +14,7 @@ export default function Login() {
 
   async function submit() {
     setLoading(true); setMsg(null);
+    const supabase = createClient();
     try {
       if (mode === "signup") {
         const { error } = await supabase.auth.signUp({
@@ -23,9 +23,16 @@ export default function Login() {
         if (error) throw error;
         setMsg("Cuenta creada. Revisa tu correo si se requiere confirmación.");
       } else {
-        const { error } = await supabase.auth.signInWithPassword({ email, password: pass });
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password: pass });
         if (error) throw error;
-        router.push("/panel");
+        // Redirige según el rol del usuario.
+        let dest = "/";
+        if (data.user) {
+          const { data: prof } = await supabase.from("profiles").select("role").eq("id", data.user.id).single();
+          dest = prof?.role === "admin" ? "/admin" : prof?.role === "builder" ? "/panel" : "/";
+        }
+        router.push(dest);
+        router.refresh();
       }
     } catch (e: any) {
       setMsg(e.message);
