@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Project, money } from "@/lib/types";
+import { Project, money, typeLabel, formatDelivery } from "@/lib/types";
 
 export default function ProjectCard({ p, match }: { p: Project; match?: number }) {
   const href = p.organizations?.slug ? `/${p.organizations.slug}/proyectos/${p.slug}` : `/proyectos/${p.slug}`;
@@ -19,8 +19,8 @@ export default function ProjectCard({ p, match }: { p: Project; match?: number }
           </small>
         </div>
         <div className="meta">
-          <span>🏠 {p.type === "houses" ? "Casas" : p.type === "mixed" ? "Mixto" : "Apartamentos"}</span>
-          <span>🗓 {p.delivery_date}</span>
+          <span>🏠 {typeLabel(p.type)}</span>
+          <span>🗓 {formatDelivery(p.delivery_date)}</span>
         </div>
       </div>
     </Link>

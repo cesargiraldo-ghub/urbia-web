@@ -40,6 +40,7 @@ export default function ProjectManageCard({ p }: { p: Project }) {
           <button className={`btn ${published ? "btn-ghost" : "btn-primary"}`} style={{ padding: "9px 14px", fontSize: 13 }} onClick={toggle} disabled={pending}>
             {pending ? "..." : published ? "Despublicar" : "Publicar"}
           </button>
+          <Link className="btn btn-ghost" href={`/panel/proyecto/${p.id}`} style={{ padding: "9px 14px", fontSize: 13 }}>Editar</Link>
           <Link className="btn btn-ghost" href={href} style={{ padding: "9px 14px", fontSize: 13 }}>Ver</Link>
           <button className="btn btn-ghost" style={{ padding: "9px 12px", fontSize: 13, color: "#FF7A8A" }} onClick={remove} disabled={pending} title="Eliminar">🗑</button>
         </div>
