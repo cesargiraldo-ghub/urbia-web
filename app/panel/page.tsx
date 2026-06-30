@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import ProjectCard from "@/components/ProjectCard";
+import ProjectManageCard from "@/components/ProjectManageCard";
 import ScrapeForm from "@/components/ScrapeForm";
 import { Project, Lead } from "@/lib/types";
 
@@ -69,11 +69,14 @@ export default async function Panel() {
         </div>
       </div>
 
-      <h2 className="font-display" style={{ fontSize: 22, margin: "34px 0 16px" }}>Mis proyectos</h2>
+      <h2 className="font-display" style={{ fontSize: 22, margin: "34px 0 6px" }}>Mis proyectos</h2>
+      <p className="muted" style={{ fontSize: 13.5, marginBottom: 16 }}>
+        Los proyectos creados con IA quedan en <b>Borrador</b> (solo los ves tú). Revísalos y dale <b>Publicar</b> cuando estén listos para aparecer en el portal.
+      </p>
       {ps.length === 0 ? (
         <p className="muted">Aún no tienes proyectos. Crea uno con IA pegando el link de tu web 👆</p>
       ) : (
-        <div className="grid-cards">{ps.map((p) => <ProjectCard key={p.id} p={p} />)}</div>
+        <div className="grid-cards">{ps.map((p) => <ProjectManageCard key={p.id} p={p} />)}</div>
       )}
 
       <Plans />
