@@ -9,6 +9,25 @@ export async function setProjectStatus(projectId: string, status: "draft" | "pub
   const { data: auth } = await supabase.auth.getUser();
   if (!auth?.user) return { error: "No autenticado" };
 
+  // Plan Gratis: máximo 1 proyecto publicado.
+  if (status === "published") {
+    const { data: proj } = await supabase.from("projects").select("org_id").eq("id", projectId).single();
+    if (proj?.org_id) {
+      const { data: org } = await supabase.from("organizations").select("plan").eq("id", proj.org_id).single();
+      if ((org?.plan ?? "free") === "free") {
+        const { count } = await supabase
+          .from("projects")
+          .select("*", { count: "exact", head: true })
+          .eq("org_id", proj.org_id)
+          .eq("status", "published")
+          .neq("id", projectId);
+        if ((count ?? 0) >= 1) {
+          return { error: "Tu plan Gratis permite 1 proyecto publicado. Actualiza tu plan para publicar más." };
+        }
+      }
+    }
+  }
+
   const { error } = await supabase
     .from("projects")
     .update({ status, published_at: status === "published" ? new Date().toISOString() : null })
@@ -108,6 +127,7 @@ export async function setCover(projectId: string, url: string) {
   const { error } = await supabase.from("projects").update({ cover_url: url }).eq("id", projectId);
   if (error) return { error: error.message };
   revalidatePath(`/panel/proyecto/${projectId}`);
+  revalidatePath("/panel");
   revalidatePath("/");
   return { ok: true };
 }

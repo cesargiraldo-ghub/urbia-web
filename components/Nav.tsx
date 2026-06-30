@@ -20,7 +20,7 @@ export default async function Nav() {
       <div className="wrap" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 18 }}>
         <Link href="/" style={{ display: "flex", alignItems: "center", gap: 10 }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={LOGO} alt="URBIA" style={{ height: 32 }} />
+          <img src={LOGO} alt="URBIA" style={{ height: 46 }} />
         </Link>
         <nav style={{ display: "flex", gap: 6, alignItems: "center" }}>
           <Link className="chip" href="/">Explorar</Link>

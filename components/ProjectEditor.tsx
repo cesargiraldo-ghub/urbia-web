@@ -220,7 +220,7 @@ function SectionImages({ label, sectionKey, items, busy, cover, onUpload, onAddU
           {items.map((m) => (
             <div key={m.id} style={{ position: "relative", height: 80, borderRadius: 10, backgroundImage: `url('${m.url}')`, backgroundSize: "cover", backgroundPosition: "center", border: cover === m.url ? "2px solid var(--cyan)" : "1px solid var(--stroke-soft)" }}>
               <button onClick={() => onRemove(m)} title="Eliminar" style={{ position: "absolute", top: 4, right: 4, width: 22, height: 22, borderRadius: 6, border: "none", background: "rgba(7,10,23,0.7)", color: "#FF7A8A", cursor: "pointer", fontSize: 13 }}>✕</button>
-              <button onClick={() => onCover(m.url)} title="Usar como portada" style={{ position: "absolute", bottom: 4, left: 4, padding: "2px 6px", borderRadius: 6, border: "none", background: cover === m.url ? "var(--cyan)" : "rgba(7,10,23,0.7)", color: cover === m.url ? "#06101f" : "#fff", cursor: "pointer", fontSize: 10, fontWeight: 700 }}>{cover === m.url ? "Portada" : "Portada"}</button>
+              <button onClick={() => onCover(m.url)} title="Usar como portada" style={{ position: "absolute", bottom: 4, left: 4, padding: "2px 6px", borderRadius: 6, border: "none", background: cover === m.url ? "var(--cyan)" : "rgba(7,10,23,0.7)", color: cover === m.url ? "#06101f" : "#fff", cursor: "pointer", fontSize: 10, fontWeight: 700 }}>{cover === m.url ? "★ Portada" : "Hacer portada"}</button>
             </div>
           ))}
         </div>

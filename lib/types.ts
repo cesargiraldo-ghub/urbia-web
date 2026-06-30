@@ -39,12 +39,22 @@ export type Media = { id: string; project_id: string; url: string; type: string;
 export type Lead = {
   id: string;
   client_name: string | null;
+  contact: string | null;
+  phone: string | null;
+  email: string | null;
   source: string;
   ai_score: number | null;
   temperature: "hot" | "warm" | "cold" | null;
   status: string;
+  created_at?: string;
   projects?: { name: string } | null;
 };
+
+export function waFromPhone(phone: string | null) {
+  if (!phone) return null;
+  const digits = phone.replace(/[^0-9]/g, "");
+  return digits ? `https://wa.me/${digits}` : null;
+}
 
 export function money(n: number | null, currency = "COP") {
   if (n == null) return "—";

@@ -13,7 +13,8 @@ export default function ProjectManageCard({ p }: { p: Project }) {
 
   function toggle() {
     start(async () => {
-      await setProjectStatus(p.id, published ? "draft" : "published");
+      const res: any = await setProjectStatus(p.id, published ? "draft" : "published");
+      if (res?.error) { alert(res.error); return; }
       router.refresh();
     });
   }
