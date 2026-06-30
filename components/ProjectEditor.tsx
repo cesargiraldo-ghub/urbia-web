@@ -30,7 +30,7 @@ export default function ProjectEditor({ project, media }: { project: Project; me
     area_lote: project.area_lote ?? ("" as any),
     area_construida: project.area_construida ?? ("" as any),
     area_privada: project.area_privada ?? ("" as any),
-    whatsapp_url: project.whatsapp_url ?? "",
+    calendar_url: project.calendar_url ?? "",
     amenities: (project.amenities ?? []).join(", "),
   });
   const [items, setItems] = useState<Media[]>(media);
@@ -57,7 +57,7 @@ export default function ProjectEditor({ project, media }: { project: Project; me
       area_lote: numOrNull(f.area_lote),
       area_construida: numOrNull(f.area_construida),
       area_privada: numOrNull(f.area_privada),
-      whatsapp_url: f.whatsapp_url || null,
+      calendar_url: f.calendar_url || null,
       amenities: f.amenities.split(",").map((s) => s.trim()).filter(Boolean),
     });
     setSaving(false);
@@ -150,10 +150,13 @@ export default function ProjectEditor({ project, media }: { project: Project; me
         </div>
       </div>
 
-      {/* ====== CONTACTO ====== */}
+      {/* ====== CALENDARIO DE CITAS ====== */}
       <div className="glass" style={{ padding: 24 }}>
-        <h2 className="font-display" style={{ fontSize: 22, marginBottom: 16 }}>Contacto</h2>
-        <Field label="Link de WhatsApp de este proyecto"><input placeholder="https://wa.link/..." value={f.whatsapp_url} onChange={(e) => up("whatsapp_url", e.target.value)} /></Field>
+        <h2 className="font-display" style={{ fontSize: 22, marginBottom: 6 }}>Calendario de Citas</h2>
+        <p className="muted" style={{ fontSize: 13, marginBottom: 14 }}>
+          El WhatsApp de contacto es el mismo para todos los proyectos. Aquí pega el <b>calendario de auto-agendamiento</b> de URBIA para este proyecto (puede variar por proyecto).
+        </p>
+        <Field label="Link del calendario de citas"><input placeholder="https://calendly.com/urbia/canto-verde" value={f.calendar_url} onChange={(e) => up("calendar_url", e.target.value)} /></Field>
       </div>
 
       <div style={{ display: "flex", gap: 12, alignItems: "center", position: "sticky", bottom: 14, zIndex: 5 }}>

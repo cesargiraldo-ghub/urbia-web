@@ -99,7 +99,7 @@ export default function ProjectDetailView({ p, units, media }: { p: Project; uni
         </div>
 
         <div>
-          <CreditSimulator priceFrom={p.price_from ?? 400} downPct={p.down_payment_pct ?? 10} currency={p.currency ?? "COP"} />
+          <CreditSimulator priceFrom={p.price_from ?? 400} downPct={p.down_payment_pct ?? 10} currency={p.currency ?? "COP"} calendarUrl={p.calendar_url} waUrl={wa} />
           <div className="glass-soft" style={{ padding: 18, marginTop: 16, textAlign: "center" }}>
             <p className="muted" style={{ fontSize: 13.5 }}>¿Prefieres que te contactemos? URBIA te califica y agenda por WhatsApp.</p>
             <a className="btn btn-primary" href={wa} target="_blank" rel="noopener noreferrer" style={{ width: "100%", marginTop: 12 }}>💬 Hablar por WhatsApp</a>

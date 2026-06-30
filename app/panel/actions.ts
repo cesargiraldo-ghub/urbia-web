@@ -45,6 +45,7 @@ type ProjectFields = {
   area_construida?: number | null;
   area_privada?: number | null;
   whatsapp_url?: string | null;
+  calendar_url?: string | null;
   amenities?: string[];
   cover_url?: string | null;
 };

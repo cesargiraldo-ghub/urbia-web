@@ -20,6 +20,7 @@ export type Project = {
   area_construida: number | null;
   area_privada: number | null;
   whatsapp_url: string | null;
+  calendar_url: string | null;
   organizations?: { name: string; slug: string | null; logo_url: string | null } | null;
 };
 
