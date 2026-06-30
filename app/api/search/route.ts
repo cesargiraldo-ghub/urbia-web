@@ -13,7 +13,7 @@ export async function POST(req: Request) {
   const supabase = createClient();
   const { data: projects } = await supabase
     .from("projects")
-    .select("id, name, slug, type, city, country, price_from, currency, down_payment_pct, delivery_date, tag, description, amenities, cover_url")
+    .select("id, name, slug, type, city, country, price_from, currency, down_payment_pct, delivery_date, tag, description, amenities, cover_url, organizations(slug)")
     .eq("status", "published")
     .limit(50);
 

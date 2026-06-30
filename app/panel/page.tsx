@@ -30,7 +30,7 @@ export default async function Panel() {
   }
 
   const [{ data: projects }, { data: leads }] = await Promise.all([
-    supabase.from("projects").select("*, organizations(name, logo_url)").eq("org_id", orgId ?? "").order("created_at", { ascending: false }),
+    supabase.from("projects").select("*, organizations(name, slug, logo_url)").eq("org_id", orgId ?? "").order("created_at", { ascending: false }),
     supabase.from("leads").select("*, projects(name)").eq("org_id", orgId ?? "").order("created_at", { ascending: false }).limit(10),
   ]);
 

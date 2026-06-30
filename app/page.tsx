@@ -10,7 +10,7 @@ export default async function Home() {
   const supabase = createClient();
   const { data } = await supabase
     .from("projects")
-    .select("*, organizations(name, logo_url)")
+    .select("*, organizations(name, slug, logo_url)")
     .eq("status", "published")
     .order("created_at", { ascending: false })
     .limit(6);

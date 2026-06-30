@@ -52,6 +52,16 @@ export default function ScrapeForm() {
               ))}
             </div>
           )}
+          {Array.isArray(result.images) && result.images.length > 0 && (
+            <>
+              <p className="muted" style={{ fontSize: 12.5, marginTop: 12 }}>{result.images.length} imágenes encontradas:</p>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(90px,1fr))", gap: 8, marginTop: 8 }}>
+                {result.images.map((u: string, i: number) => (
+                  <div key={i} style={{ height: 70, borderRadius: 8, backgroundImage: `url('${u}')`, backgroundSize: "cover", backgroundPosition: "center" }} />
+                ))}
+              </div>
+            </>
+          )}
           <p className="muted" style={{ fontSize: 12.5, marginTop: 12 }}>
             ✓ Ficha generada en borrador. Revísala y publícala desde &quot;Mis proyectos&quot;.
           </p>

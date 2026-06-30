@@ -2,8 +2,9 @@ import Link from "next/link";
 import { Project, money } from "@/lib/types";
 
 export default function ProjectCard({ p, match }: { p: Project; match?: number }) {
+  const href = p.organizations?.slug ? `/${p.organizations.slug}/proyectos/${p.slug}` : `/proyectos/${p.slug}`;
   return (
-    <Link href={`/proyectos/${p.slug}`} className="card glass">
+    <Link href={href} className="card glass">
       <div className="img" style={{ backgroundImage: `url('${p.cover_url ?? ""}')` }}>
         {p.tag && <span className="tag">{p.tag}</span>}
         {match != null && <span className="match">{match}% match</span>}

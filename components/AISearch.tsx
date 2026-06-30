@@ -5,6 +5,11 @@ import { Project, money } from "@/lib/types";
 
 type Result = Project & { match?: number };
 
+function projectHref(p: Result) {
+  const orgSlug = (p as any).organizations?.slug as string | undefined;
+  return orgSlug ? `/${orgSlug}/proyectos/${p.slug}` : `/proyectos/${p.slug}`;
+}
+
 export default function AISearch() {
   const [q, setQ] = useState("");
   const [loading, setLoading] = useState(false);
@@ -70,7 +75,7 @@ export default function AISearch() {
       {results.length > 0 && (
         <div className="grid-cards" style={{ marginTop: 26 }}>
           {results.map((p) => (
-            <Link key={p.id} href={`/proyectos/${p.slug}`} className="card glass">
+            <Link key={p.id} href={projectHref(p)} className="card glass">
               <div className="img" style={{ backgroundImage: `url('${p.cover_url ?? ""}')` }}>
                 {p.tag && <span className="tag">{p.tag}</span>}
                 {p.match != null && <span className="match">{p.match}% match</span>}

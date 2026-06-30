@@ -16,7 +16,7 @@ export type Project = {
   amenities: string[];
   cover_url: string | null;
   source_url: string | null;
-  organizations?: { name: string; logo_url: string | null } | null;
+  organizations?: { name: string; slug: string | null; logo_url: string | null } | null;
 };
 
 export type UnitType = {
